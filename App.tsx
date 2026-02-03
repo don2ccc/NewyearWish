@@ -4,11 +4,13 @@ import { WishForm } from './components/WishForm';
 import { WishWall } from './components/WishWall';
 import { wishService } from './services/supabaseClient';
 import { Wish } from './types';
+import { useLanguage } from './contexts/LanguageContext';
 
 function App() {
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [loading, setLoading] = useState(true);
   const [isMock, setIsMock] = useState(false);
+  const { t } = useLanguage();
 
   const fetchWishes = async () => {
     setLoading(true);
@@ -52,13 +54,13 @@ function App() {
             
             <div className="mt-8 text-center opacity-70">
               <p className="text-cn-light-gold text-sm font-serif italic">
-                "May all your dreams come true in the coming year."
+                {t('footerQuote')}
               </p>
             </div>
 
             {isMock && (
               <div className="mt-6 p-4 bg-yellow-900/40 border border-yellow-700 rounded text-xs text-yellow-200">
-                <strong>Demo Mode:</strong> Supabase keys not found. Wishes are saved locally in memory.
+                <strong>{t('demoMode')}</strong> {t('demoModeDesc')}
               </div>
             )}
           </div>
@@ -68,9 +70,9 @@ function App() {
         <div className="lg:col-span-7">
           <div className="bg-red-900/40 border border-cn-gold/30 rounded-3xl p-6 shadow-2xl backdrop-blur-sm">
              <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-                <h3 className="text-2xl font-serif font-bold text-cn-gold">Latest Wishes</h3>
+                <h3 className="text-2xl font-serif font-bold text-cn-gold">{t('latestWishes')}</h3>
                 <span className="bg-red-800 text-red-200 text-xs px-3 py-1 rounded-full border border-red-600">
-                  {wishes.length} Wishes
+                  {wishes.length} {t('wishesCount')}
                 </span>
              </div>
              <WishWall wishes={wishes} loading={loading} />
@@ -81,7 +83,7 @@ function App() {
 
       {/* Decorative Footer */}
       <footer className="mt-20 text-center text-red-400 text-sm p-8 border-t border-red-900">
-        <p>© 2024 New Year Wish Pool. Wishing you prosperity.</p>
+        <p>{t('footerCopyright')}</p>
       </footer>
     </div>
   );

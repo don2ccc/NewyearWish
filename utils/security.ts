@@ -14,20 +14,20 @@ export const sanitizeInput = (input: string): string => {
 };
 
 // Check if input meets basic validity requirements
-export const validateWish = (content: string, name: string): { valid: boolean; error?: string } => {
+export const validateWish = (content: string, name: string): { valid: boolean; errorKey?: string } => {
   const cleanContent = sanitizeInput(content);
   const cleanName = sanitizeInput(name);
 
   if (cleanContent.length === 0) {
-    return { valid: false, error: 'Wish content cannot be empty.' };
+    return { valid: false, errorKey: 'emptyError' };
   }
 
   if (cleanContent.length > 200) {
-    return { valid: false, error: 'Wish is too long (max 200 characters).' };
+    return { valid: false, errorKey: 'lengthError' };
   }
 
   if (cleanName.length > 30) {
-    return { valid: false, error: 'Name is too long (max 30 characters).' };
+    return { valid: false, errorKey: 'nameError' };
   }
 
   return { valid: true };

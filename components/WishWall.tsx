@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wish } from '../types';
 import { WishCard } from './WishCard';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface WishWallProps {
   wishes: Wish[];
@@ -8,10 +9,12 @@ interface WishWallProps {
 }
 
 export const WishWall: React.FC<WishWallProps> = ({ wishes, loading }) => {
+  const { t } = useLanguage();
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64 text-cn-gold animate-pulse">
-        <div className="text-xl font-serif">Loading Wishes...</div>
+        <div className="text-xl font-serif">{t('loading')}</div>
       </div>
     );
   }
@@ -19,8 +22,8 @@ export const WishWall: React.FC<WishWallProps> = ({ wishes, loading }) => {
   if (wishes.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-red-200 opacity-80">
-        <p className="text-lg">No wishes yet.</p>
-        <p className="text-sm mt-2">Be the first to wish!</p>
+        <p className="text-lg">{t('noWishes')}</p>
+        <p className="text-sm mt-2">{t('beFirst')}</p>
       </div>
     );
   }

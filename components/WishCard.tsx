@@ -1,17 +1,21 @@
 import React from 'react';
 import { Wish } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface WishCardProps {
   wish: Wish;
 }
 
 export const WishCard: React.FC<WishCardProps> = ({ wish }) => {
-  // Format date: "Jan 24, 10:30 PM"
-  const formattedDate = new Date(wish.created_at).toLocaleDateString('en-US', {
+  const { language } = useLanguage();
+  
+  // Format date based on current locale
+  const formattedDate = new Date(wish.created_at).toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', {
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
+    hour12: language === 'en' // 24h format for Chinese often preferred, but keeping standard
   });
 
   return (
